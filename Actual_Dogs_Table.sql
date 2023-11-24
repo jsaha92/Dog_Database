@@ -80,7 +80,6 @@ CREATE TABLE OwnerPreferences (
 
 CREATE TABLE MedicalHistory (
     Pet_ID INT,
-    Visit_Date DATE,
     VaccinationsReceived BOOLEAN,
     Fixed BOOLEAN,
     FOREIGN KEY (Pet_ID) REFERENCES Pets(Pet_ID)
