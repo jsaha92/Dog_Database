@@ -1,0 +1,22 @@
+INSERT INTO Events (Event_ID, Event_Name, Event_Date, Shelter_Hosting)
+VALUES 
+  (1, 'Pawsome Adoption Day', '12/1/2023', 17),
+  (2, 'Wagging Tails Extravaganza', '12/3/2023', 6),
+  (3, 'Bark in the Park', '12/5/2023', 13),
+  (4, 'Furry Friends Fiesta', '12/8/2023', 10),
+  (5, 'Canine Carnival', '12/10/2023', 8),
+  (6, 'Snuggle Pups Showcase', '12/12/2023', 2),
+  (7, 'Tail-wagging Fair', '12/15/2023', 19),
+  (8, 'Doggie Delight Day', '12/17/2023', 14),
+  (9, 'Happy Hounds Happening', '12/20/2023', 4),
+  (10, 'Puppies and Pancakes', '12/22/2023', 5),
+  (11, 'Woofstock', '12/25/2023', 7),
+  (12, 'Furry Family Fest', '12/28/2023', 15),
+  (13, 'Bow Wow Bonanza', '12/30/2023', 12),
+  (14, 'Canine Connection Day', '1/2/2024', 20),
+  (15, 'Tails of Joy Celebration', '1/5/2024', 3),
+  (16, 'Sniff and Snuggle Soiree', '1/8/2024', 1),
+  (17, 'Puppy Love Parade', '1/10/2024', 9),
+  (18, 'Barkitecture Show', '1/13/2024', 16),
+  (19, 'Fuzzball Fiesta', '1/15/2024', 11),
+  (20, 'Adopt-a-Palooza', '1/18/2024', 18);

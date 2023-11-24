@@ -90,5 +90,6 @@ CREATE TABLE Events (
     Event_ID INT PRIMARY KEY,
     Event_Name VARCHAR(255),
     Event_Date DATE,
-    Location VARCHAR(255)
+    Shelter_Hosting INT,
+    FOREIGN KEY (Shelter_Hosting) REFERENCES Shelters(Shelter_ID)
 );
