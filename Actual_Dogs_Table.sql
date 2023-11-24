@@ -1,4 +1,3 @@
--- Combined Shelters and Shelter_Websites table
 CREATE TABLE Shelters (
     Shelter_ID INT PRIMARY KEY,
     Shelter VARCHAR(255) NOT NULL,
@@ -6,7 +5,6 @@ CREATE TABLE Shelters (
     Website VARCHAR(255) NOT NULL
 );
 
--- Combined Vets and Vet_Websites table
 CREATE TABLE Vets (
     Vet_ID INT PRIMARY KEY,
     Vet_Name VARCHAR(255) NOT NULL,
@@ -15,7 +13,7 @@ CREATE TABLE Vets (
     Website VARCHAR(255) 
 );
 
--- Create Pets table
+
 CREATE TABLE Pets (
     Pet_ID INT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
@@ -30,7 +28,7 @@ CREATE TABLE Pets (
     FOREIGN KEY (Shelter_ID) REFERENCES Shelters(Shelter_ID)
 );
 
--- Compatibility table
+
 CREATE TABLE Compatibility (
     Pet_ID INT PRIMARY KEY,
     Good_with_Kids BOOLEAN,
@@ -40,8 +38,6 @@ CREATE TABLE Compatibility (
 );
 
 
-
--- Owners table
 CREATE TABLE Owners (
     owner_ID INT PRIMARY KEY,
     First_Name VARCHAR(255) NOT NULL,
@@ -53,17 +49,15 @@ CREATE TABLE Owners (
     FOREIGN KEY (Nearest_Shelter) REFERENCES Shelters(Shelter_ID)
 );
 
--- Create Adoption table
 CREATE TABLE Adoption (
     Adoption_ID INT PRIMARY KEY,
     Pet_ID INT,
-    Owner_ID INT,  -- New column to reference the owner who adopted the dog
+    Owner_ID INT,  
     Adoption_Fee DECIMAL(8,2),
     FOREIGN KEY (Pet_ID) REFERENCES Pets(Pet_ID),
     FOREIGN KEY (Owner_ID) REFERENCES Owners(owner_ID)
 );
 
--- Contact information table
 CREATE TABLE OwnerContact (
     ContactID INT PRIMARY KEY,
     owner_ID INT,
@@ -98,5 +92,5 @@ CREATE TABLE Events (
     Event_ID INT PRIMARY KEY,
     Event_Name VARCHAR(255),
     Event_Date DATE,
-    Location VARCHAR(255),
+    Location VARCHAR(255)
 );
