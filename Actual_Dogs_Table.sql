@@ -84,3 +84,19 @@ CREATE TABLE OwnerPreferences (
     Potty_Trained_Required BOOLEAN,
     FOREIGN KEY (owner_ID) REFERENCES Owners(owner_ID)
 );
+
+CREATE TABLE MedicalHistory (
+    Pet_ID INT,
+    Visit_Date DATE,
+    VaccinationsReceived BOOLEAN,
+    Fixed BOOLEAN,
+    FOREIGN KEY (Pet_ID) REFERENCES Pets(Pet_ID)
+);
+
+
+CREATE TABLE Events (
+    Event_ID INT PRIMARY KEY,
+    Event_Name VARCHAR(255),
+    Event_Date DATE,
+    Location VARCHAR(255),
+);
