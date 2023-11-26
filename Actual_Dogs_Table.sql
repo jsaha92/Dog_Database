@@ -9,7 +9,7 @@ CREATE TABLE Vets (
     Vet_ID INT PRIMARY KEY,
     Vet_Name VARCHAR(75) NOT NULL,
     Address VARCHAR(255) ,
-    Phone VARCHAR(11) ,
+    Phone VARCHAR(20) ,
     Website VARCHAR(255) 
 );
 

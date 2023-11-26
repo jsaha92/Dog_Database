@@ -1,4 +1,5 @@
-INSERT INTO Adoption (Pet_Id, Owner_ID, Adoption_Fee) VALUES
+INSERT INTO Adoption (Pet_Id, Owner_ID, Adoption_Fee)
+VALUES
 (1, 58, 400),
 (2, 12, 300),
 (3, 91, 400),

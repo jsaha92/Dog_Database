@@ -1,4 +1,3 @@
--- Vet_ID, Vet Name, Address, Phone, Website
 INSERT INTO Vets (Vet_ID, Vet_Name, Address, Phone, Website)
 VALUES
 (1, 'Atlanta Humane Society', '981 Howell Mill Rd NW, Atlanta, GA, 30318', '4048755331', 'https://atlantahumane.org/'),
@@ -50,7 +49,7 @@ VALUES
 (47, 'Peachtree Creek Animal Hospital', '1085 Lindbergh Dr NE Ste 100, Atlanta, GA, 30324', '4044678779', 'https://peachtreecreekah.com/'),
 (48, 'Atlanta Veterinary Skin & Allergy Clinic', '2803 Shallowford Rd NE, Atlanta, GA, 30341', '7709368922', 'https://www.atlantaskinvet.com/'),
 (49, 'Village Animal Clinic', '1410 Dunwoody Village Pkwy, Atlanta, GA, 30338-4123', '7703938936', 'https://ahdunwoodyvillage.com/'),
-(50, 'Animal Hospital of Dunwoody Village', '1410 Dunwoody Village Pkwy, Atlanta, GA, 30338', '7703938936', 'https://ahdunwoodyvillage.com/')
+(50, 'Animal Hospital of Dunwoody Village', '1410 Dunwoody Village Pkwy, Atlanta, GA, 30338', '7703938936', 'https://ahdunwoodyvillage.com/'),
 (51, 'Banfield Pet Hospital - Perimeter', '128 Perimeter Ctr W, Atlanta, GA, 30346-1224', '7703932293', 'https://www.banfield.com/veterinarians/ga/atlanta/atw?utm_source=yext&utm_medium=yext&utm_campaign=yext&cid=yext_local'),
 (52, 'Atlanta Veterinary Dentistry Specialist', '145 Cliftwood Dr, Atlanta, GA, 30328', '4044645510', 'https://atlantaveterinarydentistry.net/'),
 (53, 'Banfield Pet Hospital - Howell Mill', '1801 Howell Mill Rd NW # 300, Atlanta, GA, 30318-0912', '4043511919', 'https://www.banfield.com/locations/veterinarians/ga/atlanta/cag/'),
