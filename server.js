@@ -38,6 +38,7 @@ app.get('/', (req, res) => {
         <li><a href="/vets">Vets</a></li>
         <li><a href="/event">Events</a></li>
         <li><a href="/pets">Pets</a></li>
+        <li><a href="/shelters">Shelters</a></li>
       </ul>
       <script src="app.js"></script>
     </body>
@@ -65,7 +66,7 @@ app.get('/', (req, res) => {
             <title>Dog Database App</title>
           </head>
           <body>
-            <h1>Data from MySQL Database</h1>
+            <h1>Rescue Dog Database</h1>
             <div id="data-container">
               ${formattedData}
             </div>
@@ -96,7 +97,7 @@ app.get('/', (req, res) => {
             <title>Dog Database App</title>
           </head>
           <body>
-            <h1>Data from MySQL Database</h1>
+            <h1>Rescue Dog Database</h1>
             <div id="data-container">
               ${formattedData}
             </div>
@@ -138,7 +139,7 @@ app.get('/pets', (req, res) => {
                   <title>Dog Database App</title>
               </head>
               <body>
-                  <h1>Data from MySQL Database</h1>
+                  <h1>Rescue Dog Database</h1>
 
                   <label for="petFilter">Filter by Pet Size:</label>
                   <select id="petFilter" onchange="filterData()">
@@ -163,12 +164,50 @@ app.get('/pets', (req, res) => {
 });
 
 
+
+
+
+
+app.get('/shelters', (req, res) => {
+  const query = 'SELECT * FROM shelters'; // Modify this query as needed
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error('MySQL query error:', err);
+      res.status(500).send('<p>Error: Internal Server Error</p>');
+    } else {
+      // Assuming the query returns an array of rows
+      const formattedData = formatDataShelter(result);
+      res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="style.css">
+          <title>Dog Database App</title>
+        </head>
+        <body>
+          <h1>Rescue Dog Database</h1>
+          <div id="data-container">
+            ${formattedData}
+          </div>
+          <script src="app.js"></script>
+        </body>
+        </html>
+      `);
+    }
+  });
+});
+
+
   function formatData(data) {
     let tableHtml = '<table>';
-    tableHtml += '<tr><th>Event_ID</th><th>Event_Name</th><th>Event_Date</th><th>Shelter_Hosting</th></tr>';
+    tableHtml += '<tr><th>Event_ID</th><th>Event_Name</th><th>Event_Date</th></tr>';
   
     data.forEach(row => {
-      tableHtml += `<tr><td>${row.Event_ID}</td><td>${row.Event_Name}</td><td>${row.Event_Date}</td><td>${row.Shelter_Hosting}</td></tr>`;
+      //tableHtml += `<tr><td>${row.Event_ID}</td><td>${row.Event_Name}</td><td>${row.Event_Date}</td></tr>`;
+      tableHtml += `<tr><td>${row.Event_ID}</td><td>${row.Event_Name}</td><td>${new Date(row.Event_Date).toLocaleDateString()}</td></tr>`;
+
     });
   
     tableHtml += '</table>';
@@ -177,10 +216,10 @@ app.get('/pets', (req, res) => {
 
   function formatDataVet(data) {
     let tableHtml = '<table>';
-    tableHtml += '<tr><th>Vet_ID</th><th>Vet_Name</th><th>Address</th><th>Phone</th><th>Website</th></tr>';
+    tableHtml += '<tr><th>Vet_Name</th><th>Address</th><th>Phone</th><th>Website</th></tr>';
   
     data.forEach(row => {
-      tableHtml += `<tr><td>${row.Vet_ID}</td><td>${row.Vet_Name}</td><td>${row.Address}</td><td>${row.Phone}</td><td>${row.Website}</td></tr>`;
+      tableHtml += `<tr><td>${row.Vet_Name}</td><td>${row.Address}</td><td>${row.Phone}</td><td>${row.Website}</td></tr>`;
     });
   
     tableHtml += '</table>';
@@ -189,10 +228,22 @@ app.get('/pets', (req, res) => {
   
   function formatDataPet(data) {
     let tableHtml = '<table>';
-    tableHtml += '<tr><th>Pet_ID</th><th>Name</th><th>Breed</th><th>Color</th><th>Age</th><th>Size</th><th>Gender</th><th>Weight</th><th>Shelter_ID</th></tr>';
+    tableHtml += '<tr><th>Name</th><th>Breed</th><th>Color</th><th>Age</th><th>Size</th><th>Gender</th><th>Weight</th><th>Shelter_ID</th></tr>';
   
     data.forEach(row => {
-      tableHtml += `<tr><td>${row.Pet_ID}</td><td>${row.Name}</td><td>${row.Breed}</td><td>${row.Color}</td><td>${row.Age}</td><td>${row.Size}</td><td>${row.Gender}</td><td>${row.Weight}</td><td>${row.Shelter_ID}</td></tr>`;
+      tableHtml += `<tr><td>${row.Name}</td><td>${row.Breed}</td><td>${row.Color}</td><td>${row.Age}</td><td>${row.Size}</td><td>${row.Gender}</td><td>${row.Weight}</td><td>${row.Shelter_ID}</td></tr>`;
+    });
+  
+    tableHtml += '</table>';
+    return tableHtml;
+  }
+
+  function formatDataShelter(data) {
+    let tableHtml = '<table>';
+    tableHtml += '<tr><th>Shelter ID</th><th>Shelter Name</th><th>Location</th><th>Website</th></tr>';
+  
+    data.forEach(row => {
+      tableHtml += `<tr><td>${row.Shelter_ID}</td><td>${row.Shelter}</td><td>${row.Location}</td><td>${row.Website}</td></tr>`;
     });
   
     tableHtml += '</table>';
