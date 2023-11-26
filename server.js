@@ -22,6 +22,29 @@ db.connect((err) => {
 });
 
 
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="style.css">
+      <title>Dog Database App</title>
+    </head>
+    <body>
+      <h1>Welcome to the Dog Database App</h1>
+      <ul>
+        <li><a href="/vets">Vets</a></li>
+        <li><a href="/event">Events</a></li>
+        <li><a href="/pets">Pets</a></li>
+      </ul>
+      <script src="app.js"></script>
+    </body>
+    </html>
+  `);
+});
+
 
   app.get('/vets', (req, res) => {
     const query = 'SELECT * FROM vets'; // Modify this query as needed
@@ -86,45 +109,6 @@ db.connect((err) => {
   });
   
 
- /* app.get('/pets', (req, res) => {
-    const query = 'SELECT * FROM pets'; // Modify this query as needed
-    db.query(query, (err, result) => {
-      if (err) {
-        console.error('MySQL query error:', err);
-        res.status(500).send('<p>Error: Internal Server Error</p>');
-      } else {
-        // Assuming the query returns an array of rows
-        const formattedData = formatDataPet(result);
-        const dropdownOptions = ['All''Small', 'Medium', 'Large', 'Extra Large'];
-        res.send(`
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="style.css">
-            <title>Dog Database App</title>
-          </head>
-          <body>
-            <h1>Data from MySQL Database</h1>
-
-            <label for="petFilter">Filter by Pet Size:</label>
-            <select id="petFilter" onchange="filterData()">
-              ${dropdownOptions.map(option => `<option value="${option}">${option}</option>`).join('')}
-            </select>
-
-            <div id="data-container">
-              ${formattedData}
-            </div>
-            <script src="app.js"></script>
-          </body>
-          </html>
-        `);
-      }
-    });
-  });
-
-*/
 
 app.get('/pets', (req, res) => {
   const selectedSize = req.query.size || 'All';
