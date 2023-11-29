@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 
+
 const app = express();
 const port = 3000;
 
@@ -20,6 +21,11 @@ db.connect((err) => {
     console.log('Connected to MySQL database');
   }
 });
+
+const bodyParser = require('body-parser');
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', (req, res) => {
@@ -49,13 +55,13 @@ app.get('/', (req, res) => {
 
 
   app.get('/vets', (req, res) => {
-    const query = 'SELECT * FROM vets'; // Modify this query as needed
+    const query = 'SELECT * FROM vets'; 
     db.query(query, (err, result) => {
       if (err) {
         console.error('MySQL query error:', err);
         res.status(500).send('<p>Error: Internal Server Error</p>');
       } else {
-        // Assuming the query returns an array of rows
+        
         const formattedData = formatDataVet(result);
         res.send(`
           <!DOCTYPE html>
@@ -80,13 +86,13 @@ app.get('/', (req, res) => {
   });
 
   app.get('/event', (req, res) => {
-    const query = 'SELECT * FROM events'; // Modify this query as needed
+    const query = 'SELECT * FROM events'; 
     db.query(query, (err, result) => {
       if (err) {
         console.error('MySQL query error:', err);
         res.status(500).send('<p>Error: Internal Server Error</p>');
       } else {
-        // Assuming the query returns an array of rows
+        
         const formattedData = formatData(result);
         res.send(`
           <!DOCTYPE html>
@@ -166,13 +172,12 @@ app.get('/pets', (req, res) => {
 
 
 app.get('/owners', (req, res) => {
-  const query = 'SELECT * FROM owners'; // Modify this query as needed
+  const query = 'SELECT * FROM owners';
   db.query(query, (err, result) => {
     if (err) {
       console.error('MySQL query error:', err);
       res.status(500).send('<p>Error: Internal Server Error</p>');
     } else {
-      // Assuming the query returns an array of rows
       const formattedData = formatDataOwner(result);
       res.send(`
         <!DOCTYPE html>
@@ -188,6 +193,34 @@ app.get('/owners', (req, res) => {
           <div id="data-container">
             ${formattedData}
           </div>
+          <form id="ownerForm" action="/owners" method="post">
+  <label for="owner_ID">Owner ID:</label>
+  <input type="text" id="owner_ID" name="owner_ID" required>
+
+  <label for="firstName">First Name:</label>
+  <input type="text" id="firstName" name="firstName" required>
+
+  <label for="lastName">Last Name:</label>
+  <input type="text" id="lastName" name="lastName" required>
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" required>
+
+  <label for="hadPreviousDog">Had Previous Dog:</label>
+  <select id="hadPreviousDog" name="hadPreviousDog" required>
+    <option value="1">Yes</option>
+    <option value="0">No</option>
+  </select>
+
+  <label for="homeSize">Home Size:</label>
+  <input type="text" id="homeSize" name="homeSize" required>
+
+  <label for="nearestShelter">Nearest Shelter:</label>
+  <input type="text" id="nearestShelter" name="nearestShelter" required>
+
+  <button type="submit">Add Owner</button>
+</form>
+
           <script src="app.js"></script>
         </body>
         </html>
@@ -198,14 +231,46 @@ app.get('/owners', (req, res) => {
 
 
 
+
+app.post('/owners', (req, res) => {
+  const {
+    owner_ID,
+    firstName,
+    lastName,
+    age,
+    hadPreviousDog,
+    homeSize,
+    nearestShelter
+  } = req.body;
+
+  const insertQuery = `
+    INSERT INTO owners (Owner_ID,First_Name, Last_Name, Age, Had_Previous_Dog, Home_Size, Nearest_Shelter) 
+    VALUES (?,?, ?, ?, ?, ?, ?)
+  `;
+
+  const values = [owner_ID, firstName, lastName, age, hadPreviousDog, homeSize, nearestShelter];
+
+  db.query(insertQuery, values, (err, result) => {
+    if (err) {
+      console.error('MySQL query error:', err);
+      res.status(500).send('<p>Error: Internal Server Error</p>');
+    } else {
+      // After inserting data, redirect to the /owners route to display the updated data
+      res.redirect('/owners');
+    }
+  });
+});
+
+
+
 app.get('/shelters', (req, res) => {
-  const query = 'SELECT * FROM shelters'; // Modify this query as needed
+  const query = 'SELECT * FROM shelters'; 
   db.query(query, (err, result) => {
     if (err) {
       console.error('MySQL query error:', err);
       res.status(500).send('<p>Error: Internal Server Error</p>');
     } else {
-      // Assuming the query returns an array of rows
+      
       const formattedData = formatDataShelter(result);
       res.send(`
         <!DOCTYPE html>
@@ -230,12 +295,43 @@ app.get('/shelters', (req, res) => {
 });
 
 
+
+
+app.post('/owners', (req, res) => {
+  const {
+    firstName,
+    lastName,
+    age,
+    hadPreviousDog,
+    homeSize,
+    nearestShelter
+  } = req.body;
+
+  const insertQuery = `
+    INSERT INTO owners (First_Name, Last_Name, Age, Had_Previous_Dog, Home_Size, Nearest_Shelter) 
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+  const values = [firstName, lastName, age, hadPreviousDog, homeSize, nearestShelter];
+
+  db.query(insertQuery, values, (err, result) => {
+    if (err) {
+      console.error('MySQL query error:', err);
+      res.status(500).send('<p>Error: Internal Server Error</p>');
+    } else {
+      
+      res.redirect('/owners');
+    }
+  });
+});
+
+
   function formatData(data) {
     let tableHtml = '<table>';
     tableHtml += '<tr><th>Event_ID</th><th>Event_Name</th><th>Event_Date</th></tr>';
   
     data.forEach(row => {
-      //tableHtml += `<tr><td>${row.Event_ID}</td><td>${row.Event_Name}</td><td>${row.Event_Date}</td></tr>`;
+      
       tableHtml += `<tr><td>${row.Event_ID}</td><td>${row.Event_Name}</td><td>${new Date(row.Event_Date).toLocaleDateString()}</td></tr>`;
 
     });
