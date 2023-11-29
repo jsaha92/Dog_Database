@@ -39,6 +39,7 @@ app.get('/', (req, res) => {
         <li><a href="/event">Events</a></li>
         <li><a href="/pets">Pets</a></li>
         <li><a href="/shelters">Shelters</a></li>
+        <li><a href="/owners">Owners</a></li>
       </ul>
       <script src="app.js"></script>
     </body>
@@ -164,7 +165,36 @@ app.get('/pets', (req, res) => {
 });
 
 
-
+app.get('/owners', (req, res) => {
+  const query = 'SELECT * FROM owners'; // Modify this query as needed
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error('MySQL query error:', err);
+      res.status(500).send('<p>Error: Internal Server Error</p>');
+    } else {
+      // Assuming the query returns an array of rows
+      const formattedData = formatDataOwner(result);
+      res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="style.css">
+          <title>Dog Database App</title>
+        </head>
+        <body>
+          <h1>Rescue Dog Database</h1>
+          <div id="data-container">
+            ${formattedData}
+          </div>
+          <script src="app.js"></script>
+        </body>
+        </html>
+      `);
+    }
+  });
+});
 
 
 
@@ -232,6 +262,19 @@ app.get('/shelters', (req, res) => {
   
     data.forEach(row => {
       tableHtml += `<tr><td>${row.Name}</td><td>${row.Breed}</td><td>${row.Color}</td><td>${row.Age}</td><td>${row.Size}</td><td>${row.Gender}</td><td>${row.Weight}</td><td>${row.Shelter_ID}</td></tr>`;
+    });
+  
+    tableHtml += '</table>';
+    return tableHtml;
+  }
+
+
+  function formatDataOwner(data) {
+    let tableHtml = '<table>';
+    tableHtml += '<tr><th>Owner ID</th><th>First Name</th><th>Last Name</th><th>Age</th><th>Had Dog Before</th><th>Home Size</th><th>Nearest Shelter</th></tr>';
+  
+    data.forEach(row => {
+      tableHtml += `<tr><td>${row.owner_ID}</td><td>${row.First_Name}</td><td>${row.Last_Name}</td><td>${row.Age}</td><td>${row.Had_Previous_Dog}</td><td>${row.Home_Size}</td><td>${row.Nearest_Shelter}</td></tr>`;
     });
   
     tableHtml += '</table>';
