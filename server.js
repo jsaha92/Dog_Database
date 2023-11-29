@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const app = express();
 const port = 3000;
 
-// MySQL Database Connection
+
 const db = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',
@@ -255,7 +255,7 @@ app.post('/owners', (req, res) => {
       console.error('MySQL query error:', err);
       res.status(500).send('<p>Error: Internal Server Error</p>');
     } else {
-      // After inserting data, redirect to the /owners route to display the updated data
+      
       res.redirect('/owners');
     }
   });
